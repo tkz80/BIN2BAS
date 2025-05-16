@@ -54,38 +54,43 @@ function generateTable(content)
     let output = [];
     var rowN = Math.ceil((content.length)/16);
     var colBias = 0;
+    var colBASIClines = 40000;
 
         output.push('<table><tr><th class="fixed01"></th>');
         output.push('</tr>');
 
+        output.push('<tr>');
+        output.push('<td>',(colBASIClines)+'&nbspREM DATA', '</td>');
+        output.push('</tr>');
+
+	    colBASIClines = colBASIClines + 10;
+
+
     if ( content[0] == 254  ) {
         output.push('<tr>');
-        output.push('<td>','&nbsp&nbsp&nbsp&nbspDEFB', '</td>');
+        output.push('<td>',(colBASIClines)+'&nbspDATA ');
         for ( let i=0; i<7 ; i++ ) {
             var sp ="";
             if ( i > 0 ) {
                 sp =",";
             }
             if ( i < content.length ) {
-                output.push('<td>',sp + '0x' +('0'+(content[i].toString(16)).toUpperCase()).slice(-2), '</td>');
+                output.push(sp + '\"' +('0'+(content[i].toString(16)).toUpperCase()).slice(-2) + '\"');
             }
             else {
                 output.push('<td></td>');
             }
         }
-        output.push('</tr>');
+        output.push('</td>','</tr>');
 
         rowN = Math.ceil((content.length-7)/16);
         colBias = 7;
+        colBASIClines = colBASIClines + 10;
     }
 
     for ( let row=0; row<rowN; row++ ) {
         output.push('<tr>');
-/*
-        output.push('<th class="fixed02" align="right">',(row*colN).toString(16),':</th>');
-        output.push('<td>','&nbsp&nbsp&nbsp&nbsp', '</td>');
-*/
-        output.push('<td>','&nbsp&nbsp&nbsp&nbspDEFB', '</td>');
+        output.push('<td>',(colBASIClines)+'&nbspDATA ');
         for ( let col=0; col<colN; col++ ) {
             let i = row * colN + col + colBias;
             var sp ="";
@@ -93,13 +98,14 @@ function generateTable(content)
                 sp =",";
             }
             if ( i < content.length ) {
-                output.push('<td>',sp + '0x' +('0'+(content[i].toString(16)).toUpperCase()).slice(-2), '</td>');
+                output.push(sp + '\"' +('0'+(content[i].toString(16)).toUpperCase()).slice(-2) + '\"');
             }
             else {
                 output.push('<td></td>');
             }
         }
-        output.push('</tr>');
+        output.push('</td>','</tr>');
+        colBASIClines = colBASIClines + 10;
     }
     output.push('</table>');
     outContent.innerHTML = output.join('');
