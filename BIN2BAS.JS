@@ -65,7 +65,6 @@ function generateTable(content)
 
 	    colBASIClines = colBASIClines + 10;
 
-
     if ( content[0] == 254  ) {
         output.push('<tr>');
         output.push('<td>',(colBASIClines)+'&nbspDATA ');
